@@ -1,5 +1,6 @@
 package br.com.caelum.financas.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -16,6 +17,9 @@ public class MovimentacaoDao {
 
 	public void adiciona(Movimentacao movimentacao) {
 		this.manager.persist(movimentacao);
+		if(movimentacao.getValor().compareTo(BigDecimal.ZERO) < 0){
+			throw new RuntimeException("Movimentação negativa");
+		}
 	}
 
 	public Movimentacao busca(Integer id) {
