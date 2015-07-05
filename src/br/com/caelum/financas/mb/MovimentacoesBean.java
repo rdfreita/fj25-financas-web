@@ -4,14 +4,18 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.caelum.financas.dao.ContaDao;
+import br.com.caelum.financas.dao.MovimentacaoDao;
+import br.com.caelum.financas.modelo.Conta;
 import br.com.caelum.financas.modelo.Movimentacao;
 import br.com.caelum.financas.modelo.TipoMovimentacao;
 
 @Named
-@ViewScoped
+@SessionScoped
 public class MovimentacoesBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -21,24 +25,31 @@ public class MovimentacoesBean implements Serializable {
 	private Integer contaId;
 	private Integer categoriaId;
 	
+	@Inject
+	private ContaDao contaDao;
+	@Inject
+	private MovimentacaoDao movimentacaoDao;
+	
 	
 	public void grava() {
-		System.out.println("Fazendo a gravacao da movimentacao");
-		
-		
+		Conta contaRelacionada = contaDao.busca(contaId);
+		movimentacao.setConta(contaRelacionada);
+		movimentacaoDao.adiciona(movimentacao);		
 		limpaFormularioDoJSF();
 	}
 	
 
 	public void remove() {
-		System.out.println("Removendo a movimentacao");
-
-		
+		movimentacaoDao.remove(this.movimentacao);
+		this.movimentacoes = movimentacaoDao.lista();
 		limpaFormularioDoJSF();
 	}
 
 	public List<Movimentacao> getMovimentacoes() {
-		return movimentacoes;
+		if(this.movimentacoes == null){
+			this.movimentacoes = movimentacaoDao.lista();
+		}
+		return this.movimentacoes;
 	}
 	
 	public Movimentacao getMovimentacao() {
