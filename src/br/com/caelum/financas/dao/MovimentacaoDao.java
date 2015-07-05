@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import br.com.caelum.financas.exception.ValorInvalidoException;
 import br.com.caelum.financas.modelo.Movimentacao;
 
 @Stateless
@@ -18,7 +19,7 @@ public class MovimentacaoDao {
 	public void adiciona(Movimentacao movimentacao) {
 		this.manager.persist(movimentacao);
 		if(movimentacao.getValor().compareTo(BigDecimal.ZERO) < 0){
-			throw new RuntimeException("Movimentação negativa");
+			throw new ValorInvalidoException("Movimentação negativa");
 		}
 	}
 
