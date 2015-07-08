@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import br.com.caelum.financas.exception.ValorInvalidoException;
+import br.com.caelum.financas.modelo.Conta;
 import br.com.caelum.financas.modelo.Movimentacao;
 
 @Stateless
@@ -35,5 +36,10 @@ public class MovimentacaoDao {
 		Movimentacao movimentacaoParaRemover = this.manager.find(Movimentacao.class, movimentacao.getId());
 		this.manager.remove(movimentacaoParaRemover);
 	}
-
+	
+	public List<Movimentacao> listaTodasmovimentacoes(Conta conta){
+		return this.manager.createQuery("select m from Movimentacao m where m.conta = :conta order by m.valor desc")
+		.setParameter("conta", conta)
+		.getResultList();
+	}
 }
