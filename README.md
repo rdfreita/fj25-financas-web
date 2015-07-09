@@ -1,4 +1,4 @@
-# Curso-fj25 (Projeto fj25-financas-web
+# Curso-fj25 (Projeto fj25-financas-web)
 Curso da Caelum de Persistência com JPA, Hibernate e EJB lite
 
 Deixando de utilizar classes simples com método main para realizar testes com queries. Em seu lugar foi criada uma aplicação web para testar as pesquisas desenvolvidas nos DAOs de uma maneira mais útil e real.
