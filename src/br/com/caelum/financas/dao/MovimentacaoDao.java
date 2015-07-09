@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import br.com.caelum.financas.exception.ValorInvalidoException;
 import br.com.caelum.financas.modelo.Conta;
 import br.com.caelum.financas.modelo.Movimentacao;
+import br.com.caelum.financas.modelo.TipoMovimentacao;
 
 @Stateless
 public class MovimentacaoDao {
@@ -37,9 +38,18 @@ public class MovimentacaoDao {
 		this.manager.remove(movimentacaoParaRemover);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Movimentacao> listaTodasmovimentacoes(Conta conta){
 		return this.manager.createQuery("select m from Movimentacao m where m.conta = :conta order by m.valor desc")
 		.setParameter("conta", conta)
+		.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Movimentacao> listaPorValorETipo(BigDecimal valor, TipoMovimentacao tipo){
+		return this.manager.createQuery("select m from Movimentacao m where m.valor = :valor and m.tipoMovimentacao = :tipo")
+		.setParameter("valor", valor)
+		.setParameter("tipo", tipo)
 		.getResultList();
 	}
 }

@@ -21,11 +21,10 @@ public class MovimentacoesDaContaBean {
 	private MovimentacaoDao dao;
 	
 	public void lista() {
-
+		this.movimentacoes = dao.listaTodasmovimentacoes(conta);
 	}
 
-	public List<Movimentacao> getMovimentacoes() {
-		movimentacoes = dao.listaTodasmovimentacoes(conta); 
+	public List<Movimentacao> getMovimentacoes() { 
 		return movimentacoes;
 	}
 
