@@ -60,4 +60,10 @@ public class MovimentacaoDao {
 		query.setParameter("tipo", tipo);
 		return query.getSingleResult();
 	}
+	public List<Movimentacao> buscaTodasMovimentacoesdaConta(String titular){
+		String jpql = "select m from Movimentacao m where m.conta.titular like :titular";
+		TypedQuery<Movimentacao> query = this.manager.createQuery(jpql, Movimentacao.class);
+		query.setParameter("titular", "%"+titular+"%");
+		return query.getResultList();
+	}
 }
